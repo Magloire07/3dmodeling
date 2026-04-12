@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake
+CMAKE_SOURCE_DIR = /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build
+CMAKE_BINARY_DIR = /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/MeshViewer.dir/depend.make
@@ -72,100 +72,100 @@ include CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/main.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/main.cpp.o: ../main.cpp
 CMakeFiles/MeshViewer.dir/main.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MeshViewer.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/main.cpp.o -MF CMakeFiles/MeshViewer.dir/main.cpp.o.d -o CMakeFiles/MeshViewer.dir/main.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MeshViewer.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/main.cpp.o -MF CMakeFiles/MeshViewer.dir/main.cpp.o.d -o CMakeFiles/MeshViewer.dir/main.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/main.cpp
 
 CMakeFiles/MeshViewer.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/main.cpp > CMakeFiles/MeshViewer.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/main.cpp > CMakeFiles/MeshViewer.dir/main.cpp.i
 
 CMakeFiles/MeshViewer.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/main.cpp -o CMakeFiles/MeshViewer.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/main.cpp -o CMakeFiles/MeshViewer.dir/main.cpp.s
 
 CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o: ../myHalfedge.cpp
 CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o -MF CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o.d -o CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myHalfedge.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o -MF CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o.d -o CMakeFiles/MeshViewer.dir/myHalfedge.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myHalfedge.cpp
 
 CMakeFiles/MeshViewer.dir/myHalfedge.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/myHalfedge.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myHalfedge.cpp > CMakeFiles/MeshViewer.dir/myHalfedge.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myHalfedge.cpp > CMakeFiles/MeshViewer.dir/myHalfedge.cpp.i
 
 CMakeFiles/MeshViewer.dir/myHalfedge.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/myHalfedge.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myHalfedge.cpp -o CMakeFiles/MeshViewer.dir/myHalfedge.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myHalfedge.cpp -o CMakeFiles/MeshViewer.dir/myHalfedge.cpp.s
 
 CMakeFiles/MeshViewer.dir/myVector3D.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/myVector3D.cpp.o: ../myVector3D.cpp
 CMakeFiles/MeshViewer.dir/myVector3D.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MeshViewer.dir/myVector3D.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myVector3D.cpp.o -MF CMakeFiles/MeshViewer.dir/myVector3D.cpp.o.d -o CMakeFiles/MeshViewer.dir/myVector3D.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myVector3D.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MeshViewer.dir/myVector3D.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myVector3D.cpp.o -MF CMakeFiles/MeshViewer.dir/myVector3D.cpp.o.d -o CMakeFiles/MeshViewer.dir/myVector3D.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myVector3D.cpp
 
 CMakeFiles/MeshViewer.dir/myVector3D.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/myVector3D.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myVector3D.cpp > CMakeFiles/MeshViewer.dir/myVector3D.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myVector3D.cpp > CMakeFiles/MeshViewer.dir/myVector3D.cpp.i
 
 CMakeFiles/MeshViewer.dir/myVector3D.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/myVector3D.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myVector3D.cpp -o CMakeFiles/MeshViewer.dir/myVector3D.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myVector3D.cpp -o CMakeFiles/MeshViewer.dir/myVector3D.cpp.s
 
 CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o: ../myPoint3D.cpp
 CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o -MF CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o.d -o CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myPoint3D.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o -MF CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o.d -o CMakeFiles/MeshViewer.dir/myPoint3D.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myPoint3D.cpp
 
 CMakeFiles/MeshViewer.dir/myPoint3D.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/myPoint3D.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myPoint3D.cpp > CMakeFiles/MeshViewer.dir/myPoint3D.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myPoint3D.cpp > CMakeFiles/MeshViewer.dir/myPoint3D.cpp.i
 
 CMakeFiles/MeshViewer.dir/myPoint3D.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/myPoint3D.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myPoint3D.cpp -o CMakeFiles/MeshViewer.dir/myPoint3D.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myPoint3D.cpp -o CMakeFiles/MeshViewer.dir/myPoint3D.cpp.s
 
 CMakeFiles/MeshViewer.dir/myFace.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/myFace.cpp.o: ../myFace.cpp
 CMakeFiles/MeshViewer.dir/myFace.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MeshViewer.dir/myFace.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myFace.cpp.o -MF CMakeFiles/MeshViewer.dir/myFace.cpp.o.d -o CMakeFiles/MeshViewer.dir/myFace.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myFace.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/MeshViewer.dir/myFace.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myFace.cpp.o -MF CMakeFiles/MeshViewer.dir/myFace.cpp.o.d -o CMakeFiles/MeshViewer.dir/myFace.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myFace.cpp
 
 CMakeFiles/MeshViewer.dir/myFace.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/myFace.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myFace.cpp > CMakeFiles/MeshViewer.dir/myFace.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myFace.cpp > CMakeFiles/MeshViewer.dir/myFace.cpp.i
 
 CMakeFiles/MeshViewer.dir/myFace.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/myFace.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myFace.cpp -o CMakeFiles/MeshViewer.dir/myFace.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myFace.cpp -o CMakeFiles/MeshViewer.dir/myFace.cpp.s
 
 CMakeFiles/MeshViewer.dir/myMesh.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/myMesh.cpp.o: ../myMesh.cpp
 CMakeFiles/MeshViewer.dir/myMesh.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MeshViewer.dir/myMesh.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myMesh.cpp.o -MF CMakeFiles/MeshViewer.dir/myMesh.cpp.o.d -o CMakeFiles/MeshViewer.dir/myMesh.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myMesh.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MeshViewer.dir/myMesh.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myMesh.cpp.o -MF CMakeFiles/MeshViewer.dir/myMesh.cpp.o.d -o CMakeFiles/MeshViewer.dir/myMesh.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myMesh.cpp
 
 CMakeFiles/MeshViewer.dir/myMesh.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/myMesh.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myMesh.cpp > CMakeFiles/MeshViewer.dir/myMesh.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myMesh.cpp > CMakeFiles/MeshViewer.dir/myMesh.cpp.i
 
 CMakeFiles/MeshViewer.dir/myMesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/myMesh.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myMesh.cpp -o CMakeFiles/MeshViewer.dir/myMesh.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myMesh.cpp -o CMakeFiles/MeshViewer.dir/myMesh.cpp.s
 
 CMakeFiles/MeshViewer.dir/myVertex.cpp.o: CMakeFiles/MeshViewer.dir/flags.make
 CMakeFiles/MeshViewer.dir/myVertex.cpp.o: ../myVertex.cpp
 CMakeFiles/MeshViewer.dir/myVertex.cpp.o: CMakeFiles/MeshViewer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MeshViewer.dir/myVertex.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myVertex.cpp.o -MF CMakeFiles/MeshViewer.dir/myVertex.cpp.o.d -o CMakeFiles/MeshViewer.dir/myVertex.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myVertex.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MeshViewer.dir/myVertex.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/MeshViewer.dir/myVertex.cpp.o -MF CMakeFiles/MeshViewer.dir/myVertex.cpp.o.d -o CMakeFiles/MeshViewer.dir/myVertex.cpp.o -c /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myVertex.cpp
 
 CMakeFiles/MeshViewer.dir/myVertex.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshViewer.dir/myVertex.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myVertex.cpp > CMakeFiles/MeshViewer.dir/myVertex.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myVertex.cpp > CMakeFiles/MeshViewer.dir/myVertex.cpp.i
 
 CMakeFiles/MeshViewer.dir/myVertex.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshViewer.dir/myVertex.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/myVertex.cpp -o CMakeFiles/MeshViewer.dir/myVertex.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/myVertex.cpp -o CMakeFiles/MeshViewer.dir/myVertex.cpp.s
 
 # Object files for target MeshViewer
 MeshViewer_OBJECTS = \
@@ -195,9 +195,9 @@ MeshViewer: /usr/lib/x86_64-linux-gnu/libglut.so
 MeshViewer: /usr/lib/x86_64-linux-gnu/libXmu.so
 MeshViewer: /usr/lib/x86_64-linux-gnu/libXi.so
 MeshViewer: CMakeFiles/MeshViewer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable MeshViewer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable MeshViewer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MeshViewer.dir/link.txt --verbose=$(VERBOSE)
-	/usr/bin/cmake -E copy_directory /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/shaders /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/shaders
+	/usr/bin/cmake -E copy_directory /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/shaders /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/shaders
 
 # Rule to build all files generated by this target.
 CMakeFiles/MeshViewer.dir/build: MeshViewer
@@ -208,6 +208,6 @@ CMakeFiles/MeshViewer.dir/clean:
 .PHONY : CMakeFiles/MeshViewer.dir/clean
 
 CMakeFiles/MeshViewer.dir/depend:
-	cd /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles/MeshViewer.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build /home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake/build/CMakeFiles/MeshViewer.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/MeshViewer.dir/depend
 

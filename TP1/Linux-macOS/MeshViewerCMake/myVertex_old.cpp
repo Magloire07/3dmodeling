@@ -15,7 +15,6 @@ myVertex::~myVertex(void)
 	if (normal) delete normal;
 }
 
-
 void myVertex::computeNormal()
 {
 	if (originof == NULL) return;

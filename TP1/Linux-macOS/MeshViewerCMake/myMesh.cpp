@@ -122,6 +122,8 @@ bool myMesh::readFile(std::string filename)
 				}
 				// set originof
 				hedges[i]->source = vertices[faceids[i]];
+				vertices[faceids[i]]->originof = hedges[i];
+				hedges[i]->adjacent_face = f;
 				// push edges to halfedges in myMesh
 				halfedges.push_back(hedges[i]);
 			}

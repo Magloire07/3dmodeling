@@ -188,13 +188,11 @@ void display()
 	vector<GLfloat> color; 
 	color.resize(4);
 
-	if ( (drawmesh && vaos[VAO_TRIANGLES_NORMSPERVERTEX]) || drawsilhouette)
+	if (drawmesh && vaos[VAO_TRIANGLES_NORMSPERVERTEX])
 	{
 		glLineWidth(1.0);
-		glEnable(GL_POLYGON_OFFSET_FILL); glPolygonOffset(2.0f, 2.0f); //for z-bleeding, z-fighting.
-		if (drawsilhouette && !drawmesh)  glUniform1i(glGetUniformLocation(shaderprogram, "type"), 1);
-		if (drawmesh) { color[0] = 0.4f, color[1] = 0.8f, color[2] = 0.4f, color[3] = 1.0f; }
-		else { color[0] = 1.0f, color[1] = 1.0f, color[2] = 1.0f, color[3] = 1.0f; }
+		glEnable(GL_POLYGON_OFFSET_FILL); glPolygonOffset(2.0f, 2.0f);
+		color[0] = 0.4f, color[1] = 0.8f, color[2] = 0.4f, color[3] = 1.0f;
 		glUniform4fv(glGetUniformLocation(shaderprogram, "kd"), 1, &color[0]);
 
 		if (smooth)
@@ -203,12 +201,27 @@ void display()
 			glDrawArrays(GL_TRIANGLES, 0, num_triangles * 3);
 			glBindVertexArray(0);
 		}
-		else 
+		else
 		{
 			glBindVertexArray(vaos[VAO_TRIANGLES_NORMSPERFACE]);
 			glDrawArrays(GL_TRIANGLES, 0, num_triangles * 3);
 			glBindVertexArray(0);
 		}
+
+		glDisable(GL_POLYGON_OFFSET_FILL);
+	}
+
+	if (drawsilhouette && !drawmesh && vaos[VAO_TRIANGLES_NORMSPERVERTEX])
+	{
+		// Draw white ghost mesh to establish depth, so silhouette lines render on top
+		glEnable(GL_POLYGON_OFFSET_FILL); glPolygonOffset(2.0f, 2.0f);
+		glUniform1i(glGetUniformLocation(shaderprogram, "type"), 1);
+		color[0] = 0.9f, color[1] = 0.9f, color[2] = 0.9f, color[3] = 1.0f;
+		glUniform4fv(glGetUniformLocation(shaderprogram, "kd"), 1, &color[0]);
+
+		glBindVertexArray(vaos[VAO_TRIANGLES_NORMSPERVERTEX]);
+		glDrawArrays(GL_TRIANGLES, 0, num_triangles * 3);
+		glBindVertexArray(0);
 
 		glUniform1i(glGetUniformLocation(shaderprogram, "type"), 0);
 		glDisable(GL_POLYGON_OFFSET_FILL);
@@ -245,26 +258,21 @@ void display()
 		for (vector<myHalfedge *>::iterator it = m->halfedges.begin(); it != m->halfedges.end(); it++)
 		{
 			myHalfedge *e = (*it);
-			myVertex *v1 = (*it)->source;
-			if ((*it)->twin == NULL) continue;
-			myVertex *v2 = (*it)->twin->source;
+			myVertex *v1 = e->source;
+			if (e->twin == NULL) continue;
+			myVertex *v2 = e->twin->source;
 
-			myVector3D direction = camera_eye - (*v1->point + *v2->point) * 0.5;
+			myPoint3D midpoint = (*v1->point + *v2->point) * 0.5;
+			myVector3D view_vector = camera_eye - midpoint;
 
-			if (e->adjacent_face == NULL || e->twin->adjacent_face == NULL) continue; // Ajouté
-			
-			if (e->adjacent_face->normal == NULL) e->adjacent_face->computeNormal();
-			if (e->twin->adjacent_face->normal == NULL) e->twin->adjacent_face->computeNormal(); // Ajouté
+			double dot1 = (*e->adjacent_face->normal) * view_vector;
+			double dot2 = (*e->twin->adjacent_face->normal) * view_vector;
 
-			double res1 = direction * *e->adjacent_face->normal;
-			double res2 = direction * *e->twin->adjacent_face->normal;
-
-			//if the two normals are in opposite directions, then the edge is a silhouette edge.
-			if( res1 < 0 != res2 < 0 )
+			if (dot1 * dot2 < 0)
 			{
 				silhouette_edges.push_back(v1->index);
 				silhouette_edges.push_back(v2->index);
-			}				
+			}
 		}
 
 		GLuint silhouette_edges_buffer;
@@ -292,21 +300,12 @@ void display()
 		glLineWidth(1.0);
 		color[0] = 0.2f, color[1] = 0.2f, color[2] = 0.2f, color[3] = 1.0f;		
 		glUniform4fv(glGetUniformLocation(shaderprogram, "kd"), 1, &color[0]);
+		glUniform1i(glGetUniformLocation(shaderprogram, "type"), 1);
 
 		glBindVertexArray(vaos[VAO_NORMALS]);
 		glDrawArrays(GL_LINES, 0, m->vertices.size()*2 );
 		glBindVertexArray(0);
-	}
-
-	if (drawnormals && vaos[VAO_FACENORMALS])
-	{
-		glLineWidth(2.0);
-		color[0] = 0.0f, color[1] = 0.5f, color[2] = 1.0f, color[3] = 1.0f;		
-		glUniform4fv(glGetUniformLocation(shaderprogram, "kd"), 1, &color[0]);
-
-		glBindVertexArray(vaos[VAO_FACENORMALS]);
-		glDrawArrays(GL_LINES, 0, m->faces.size()*2 );
-		glBindVertexArray(0);
+		glUniform1i(glGetUniformLocation(shaderprogram, "type"), 0);
 	}
 
 	if (pickedpoint != NULL)
