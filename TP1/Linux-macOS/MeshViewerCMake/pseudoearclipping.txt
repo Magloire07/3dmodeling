@@ -1,0 +1,58 @@
+function triangulate(polygon):
+
+    vertices = polygon vertices (CCW order)
+    triangles = []
+
+    while vertices.size > 3:
+
+        earFound = false
+
+        for i in 0 → vertices.size-1:
+
+            prev = vertices[(i-1) mod n]
+            curr = vertices[i]
+            next = vertices[(i+1) mod n]
+
+            # STEP 1 — skip reflex vertices
+            if not isConvex(prev, curr, next):
+                continue
+
+            # STEP 2 — check if triangle contains another vertex
+            ear = true
+
+            for each vertex v in vertices:
+
+                if v == prev or curr or next:
+                    continue
+
+                if pointInTriangle(prev, curr, next, v):
+                    ear = false
+                    break
+
+            # STEP 3 — ear found
+            if ear:
+
+                triangles.append( (prev, curr, next) )
+
+                remove curr from vertices
+
+                earFound = true
+                break
+
+        if not earFound:
+            error "Polygon not simple"
+
+    # last triangle
+    triangles.append( (v0, v1, v2) )
+
+    return triangles
+    
+    function pointInTriangle(A,B,C,P):
+
+    denom = (B.y - C.y)*(A.x - C.x) + (C.x - B.x)*(A.y - C.y)
+
+    alpha = ((B.y - C.y)*(P.x - C.x) + (C.x - B.x)*(P.y - C.y)) / denom
+    beta  = ((C.y - A.y)*(P.x - C.x) + (A.x - C.x)*(P.y - C.y)) / denom
+    gamma = 1 - alpha - beta
+
+    return alpha >= 0 && beta >= 0 && gamma >= 0

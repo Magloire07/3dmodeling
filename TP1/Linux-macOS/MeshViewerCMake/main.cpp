@@ -383,7 +383,7 @@ void initMesh()
 	
 	cout << "Reading mesh from file...\n";
 	m = new myMesh();
-	if (m->readFile("../cube.obj")) {
+	if (m->readFile("../c_gear.obj")) {
 		m->computeNormals();
 		makeBuffers(m);
 	}
@@ -397,5 +397,6 @@ int main(int argc, char* argv[])
 	initMesh();
 
 	glutMainLoop();
+
 	return 0;
 }

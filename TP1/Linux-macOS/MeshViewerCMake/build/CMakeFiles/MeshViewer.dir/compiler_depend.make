@@ -434,7 +434,13 @@ CMakeFiles/MeshViewer.dir/main.cpp.o: ../main.cpp \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/vector.tcc \
   ../helperFunctions.h \
-  /usr/include/c++/11/iostream
+  /usr/include/c++/11/iostream \
+  /usr/include/c++/11/tuple \
+  /usr/include/c++/11/utility \
+  /usr/include/c++/11/bits/stl_relops.h \
+  /usr/include/c++/11/array \
+  /usr/include/c++/11/bits/uses_allocator.h \
+  /usr/include/c++/11/bits/invoke.h
 
 CMakeFiles/MeshViewer.dir/myFace.cpp.o: ../myFace.cpp \
   /usr/include/stdc-predef.h \
@@ -1361,12 +1367,6 @@ CMakeFiles/MeshViewer.dir/myVertex.cpp.o: ../myVertex.cpp \
 
 ../myPoint3D.cpp:
 
-/usr/include/c++/11/bits/invoke.h:
-
-/usr/include/c++/11/bits/uses_allocator.h:
-
-/usr/include/c++/11/tuple:
-
 /usr/include/c++/11/bits/stl_map.h:
 
 /usr/include/c++/11/bits/stl_tree.h:
@@ -1376,6 +1376,12 @@ CMakeFiles/MeshViewer.dir/myVertex.cpp.o: ../myVertex.cpp \
 ../myHalfedge.cpp:
 
 ../myFace.cpp:
+
+/usr/include/c++/11/bits/invoke.h:
+
+/usr/include/c++/11/bits/uses_allocator.h:
+
+/usr/include/c++/11/tuple:
 
 /usr/include/c++/11/bits/stl_uninitialized.h:
 
