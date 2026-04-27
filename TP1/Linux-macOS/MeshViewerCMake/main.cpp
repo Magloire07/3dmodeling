@@ -260,6 +260,7 @@ void display()
 			myHalfedge *e = (*it);
 			myVertex *v1 = e->source;
 			if (e->twin == NULL) continue;
+			if (e->adjacent_face == NULL || e->twin->adjacent_face == NULL) continue;
 			myVertex *v2 = e->twin->source;
 
 			myPoint3D midpoint = (*v1->point + *v2->point) * 0.5;
@@ -393,9 +394,7 @@ void initMesh()
 int main(int argc, char* argv[]) 
 {
 	initInterface(argc, argv);
-
 	initMesh();
-
 	glutMainLoop();
 
 	return 0;

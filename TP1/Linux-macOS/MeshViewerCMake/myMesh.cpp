@@ -60,25 +60,23 @@ bool myMesh::readFile(std::string filename)
 		return false;
 	}
 	name = filename;
-
 	map<pair<int, int>, myHalfedge *> twin_map;
 	map<pair<int, int>, myHalfedge *>::iterator it;
 
 	while (getline(fin, s))
 	{
+		t.clear();
 		stringstream myline(s);
-		myline >> t;
+		if (!(myline >> t)) continue;
 		if (t == "g") {}
 		else if (t == "v")
 		{
-
 			float x, y, z;
 			myline >> x >> y >> z;
-			//cout << "v " << x << " " << y << " " << z << endl;
 			myVertex *v = new myVertex();
-			myPoint3D *p = new myPoint3D(x, y, z);
-			v->point = p;
+			v->point = new myPoint3D(x, y, z);
 			vertices.push_back(v);
+			// cout << "v " << x << " " << y << " " << z << endl;
 		}
 		else if (t == "mtllib") {}
 		else if (t == "usemtl") {}
@@ -86,62 +84,37 @@ bool myMesh::readFile(std::string filename)
 		else if (t == "f")
 		{
 			faceids.clear();
-			while (myline >> u) // read indices of vertices from a face into a container - it helps to access them later 
-				faceids.push_back(atoi((u.substr(0, u.find("/"))).c_str()) - 1);
-			if (faceids.size() < 3) // ignore degenerate faces
-				continue;
+			while (myline >> u)
+				faceids.push_back(atoi((u.substr(0, u.find("/"))).c_str()));
 
-			hedges = new myHalfedge *[faceids.size()]; // allocate the array for storing pointers to half-edges
-			for (unsigned int i = 0; i < faceids.size(); i++) 
-				hedges[i] = new myHalfedge(); // pre-allocate new half-edges
+			unsigned int n = faceids.size();
+			hedges = new myHalfedge *[n];
+			for (unsigned int i = 0; i < n; i++) hedges[i] = new myHalfedge();
 
-			myFace *f = new myFace(); // allocate the new face
-			f->adjacent_halfedge = hedges[0]; // connect the face with incident edge
-			faces.push_back(f); // push the face to faces in myMesh
-			for (unsigned int i = 0; i < faceids.size(); i++)
+			for (unsigned int i = 0; i < n; i++)
 			{
-				int iplusone = (i + 1) % faceids.size();
-				int iminusone = (i - 1 + faceids.size()) % faceids.size();
-
-				// YOUR CODE COMES HERE!
-
-				// connect prevs, and next
-				hedges[i]->next = hedges[iplusone];
-				hedges[i]->prev = hedges[iminusone];
-
-				// search for the twins using twin_map
-				it = twin_map.find(make_pair(faceids[i], faceids[iplusone]));
-				if (it != twin_map.end()) // if the twin is found, connect the twins
+				hedges[i]->source = vertices[faceids[i] - 1];
+				vertices[faceids[i] - 1]->originof = hedges[i];
+				halfedges.push_back(hedges[i]);
+				hedges[i]->next = hedges[(i + 1) % n];
+				hedges[i]->prev = hedges[(i + n - 1) % n];
+				it = twin_map.find(make_pair(faceids[i], faceids[(i + 1) % n]));
+				if (it != twin_map.end())
 				{
 					hedges[i]->twin = it->second;
 					it->second->twin = hedges[i];
-					twin_map.erase(it); // remove the twin from the map
+					twin_map.erase(it);
 				}
-				else // if the twin is not found, add the half-edge to the map
-				{
-					twin_map[make_pair(faceids[iplusone], faceids[i])] = hedges[i];
-				}
-				// set originof
-				hedges[i]->source = vertices[faceids[i]];
-				vertices[faceids[i]]->originof = hedges[i];
-				hedges[i]->adjacent_face = f;
-				// push edges to halfedges in myMesh
-				halfedges.push_back(hedges[i]);
+				else
+					twin_map[make_pair(faceids[(i + 1) % n], faceids[i])] = hedges[i];
 			}
-			delete[] hedges;
-
-			// push faces to faces in myMesh
-			// cout << "f"; 
-
-			// while (myline >> u) 
-			// {
-			// 	cout << " " << atoi((u.substr(0, u.find("/"))).c_str());
-			// 	faceids.push_back(atoi((u.substr(0, u.find("/"))).c_str())-1);
-			// 	cout << "size" << faceids.size();
-			// }
-			// cout << endl;
+			myFace *f = new myFace();
+			f->adjacent_halfedge = hedges[0];
+			for (unsigned int i = 0; i < n; i++) hedges[i]->adjacent_face = f;
+			faces.push_back(f);
 		}
 	}
+
 	checkMesh();
 	normalize();
 
@@ -704,7 +677,38 @@ namespace {
 			}
 		}
 	}
-}
+
+	void doEarClipTriangulate(
+		myMesh *mesh,
+		const std::vector<myVertex *> &face_vertices,
+		const std::vector<myHalfedge *> &original_halfedges)
+	{
+		int vertex_count = (int)face_vertices.size();
+
+		// Build boundary map: local edge (i -> (i+1)%n) -> original halfedge
+		std::map<EdgeKey, myHalfedge *> boundary_map;
+		for (int i = 0; i < vertex_count; i++)
+			boundary_map[EdgeKey(i, (i + 1) % vertex_count)] = original_halfedges[i];
+
+		// Try ear-clipping triangulation
+		std::vector<std::vector<int>> triangle_indices;
+		if (!buildEarTriangles(face_vertices, triangle_indices)) {
+			// Fallback to fan triangulation for degenerate/flat faces
+			for (int i = 1; i < vertex_count - 1; i++) {
+				std::vector<int> tri;
+				tri.push_back(0);
+				tri.push_back(i);
+				tri.push_back(i + 1);
+				triangle_indices.push_back(tri);
+			}
+		}
+
+		std::map<EdgeKey, myHalfedge *> created_edges;
+		createTrianglesAndEdges(mesh, face_vertices, triangle_indices, created_edges);
+		connectCreatedEdgeTwins(boundary_map, created_edges);
+		updateOriginOfAfterTriangulation(face_vertices, original_halfedges, created_edges);
+	}
+} // end anonymous namespace
 
 bool myMesh::triangulate(myFace *f)
 {
@@ -717,19 +721,7 @@ bool myMesh::triangulate(myFace *f)
 	std::vector<myHalfedge *> original_halfedges;
 	collectFaceData(f, face_vertices, original_halfedges);
 
-	std::vector<std::vector<int>> triangle_indices;
-	if (!buildEarTriangles(face_vertices, triangle_indices)) return false;
-
-	std::map<std::pair<int, int>, myHalfedge *> boundary_map;
-	for (int i = 0; i < vertex_count; i++) {
-		int next_i = (i + 1) % vertex_count;
-		boundary_map[std::make_pair(i, next_i)] = original_halfedges[i];
-	}
-
-	std::map<std::pair<int, int>, myHalfedge *> created_edges;
-	createTrianglesAndEdges(this, face_vertices, triangle_indices, created_edges);
-	connectCreatedEdgeTwins(boundary_map, created_edges);
-	updateOriginOfAfterTriangulation(face_vertices, original_halfedges, created_edges);
+	doEarClipTriangulate(this, face_vertices, original_halfedges);
 
 	removeOldFace(f, original_halfedges);
 

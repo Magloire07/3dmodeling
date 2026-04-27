@@ -18,30 +18,23 @@ myVertex::~myVertex(void)
 
 void myVertex::computeNormal()
 {
-	if (originof == NULL) return;
-	
-	myHalfedge *e = originof;
-	myHalfedge *step = originof;
-	
-	normal->dX = 0;
-	normal->dY = 0;
-	normal->dZ = 0;
-	int counter = 0;
-	
+	normal->clear();
+	myHalfedge *h = originof;
+	if (!h) return;
+
 	do {
-		if (step->adjacent_face != NULL && step->adjacent_face->normal != NULL) {
-			myVector3D *h = step->adjacent_face->normal;
-			normal->dX += h->dX;
-			normal->dY += h->dY;
-			normal->dZ += h->dZ;
-			counter++;
-		}
-		
-		if (step->twin == NULL || step->twin->next == NULL) break;
-		step = step->twin->next;
-	} while (e != step);
-	
-	if (counter > 0) {
-		normal->normalize();
-	}
+		// Accumulate cross product contribution from this face
+		myPoint3D *p0 = h->prev->source->point;
+		myPoint3D *p1 = point;
+		myPoint3D *p2 = h->next->source->point;
+		myVector3D v1(p1->X - p0->X, p1->Y - p0->Y, p1->Z - p0->Z);
+		myVector3D v2(p2->X - p1->X, p2->Y - p1->Y, p2->Z - p1->Z);
+		*normal += v1.crossproduct(v2);
+
+		// Advance to the next outgoing halfedge around this vertex
+		if (!h->prev->twin) break;
+		h = h->prev->twin;
+	} while (h != originof);
+
+	normal->normalize();
 }
