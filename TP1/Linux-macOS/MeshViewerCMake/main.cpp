@@ -45,6 +45,7 @@ void menu(int item)
 	case MENU_TRIANGULATE:
 		{
 			m->triangulate();
+			m->testMeshIsCorrect();
 			m->computeNormals();
 			makeBuffers(m);
 			break;
@@ -157,6 +158,7 @@ void menu(int item)
 	case MENU_SIMPLIFY:
 	 	{
 			m->simplify();
+			m->testMeshIsCorrect();
 			break;
 	 	}
 	}
@@ -384,7 +386,7 @@ void initMesh()
 	
 	cout << "Reading mesh from file...\n";
 	m = new myMesh();
-	if (m->readFile("../c_gear.obj")) {
+	if (m->readFile("../profile.obj")) {
 		m->computeNormals();
 		makeBuffers(m);
 	}

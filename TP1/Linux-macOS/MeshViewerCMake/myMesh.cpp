@@ -50,6 +50,7 @@ void myMesh::checkMesh()
 
 bool myMesh::readFile(std::string filename)
 {
+
 	string s, t, u;
 	vector<int> faceids;
 	myHalfedge **hedges;
@@ -59,9 +60,38 @@ bool myMesh::readFile(std::string filename)
 		cout << "Unable to open file!\n";
 		return false;
 	}
-	name = filename;
 	map<pair<int, int>, myHalfedge *> twin_map;
 	map<pair<int, int>, myHalfedge *>::iterator it;
+    if(isProfileFile(filename)){
+				cout << "Reading mesh from file...\n";
+				myPoint3D *profile;
+				int num_profile_points, num_segments;
+				while(getline(fin, s))
+				{
+					t.clear();
+					stringstream myline(s);
+					if (!(myline >> t)) continue;
+					if (t == "num_profile_points") {
+						myline >> num_profile_points;
+						profile = new myPoint3D[num_profile_points];
+					}
+					else if (t == "num_segments") {
+						myline >> num_segments;
+					}
+					else if (t == "v")
+					{
+						float x, y, z;
+						myline >> x >> y >> z;
+						profile[vertices.size()] = myPoint3D(x, y, z);
+						vertices.push_back(new myVertex());
+						vertices.back()->point = &profile[vertices.size() - 1];
+						// cout << "v " << x << " " << y << " " << z << endl;
+					}
+				}
+				
+				drawSurfaceOfRevolution(profile, num_profile_points, num_segments);
+
+	}else{
 
 	while (getline(fin, s))
 	{
@@ -90,15 +120,17 @@ bool myMesh::readFile(std::string filename)
 			unsigned int n = faceids.size();
 			hedges = new myHalfedge *[n];
 			for (unsigned int i = 0; i < n; i++) hedges[i] = new myHalfedge();
-
+			unsigned int iplusone, iminusone;
 			for (unsigned int i = 0; i < n; i++)
 			{
 				hedges[i]->source = vertices[faceids[i] - 1];
 				vertices[faceids[i] - 1]->originof = hedges[i];
 				halfedges.push_back(hedges[i]);
-				hedges[i]->next = hedges[(i + 1) % n];
-				hedges[i]->prev = hedges[(i + n - 1) % n];
-				it = twin_map.find(make_pair(faceids[i], faceids[(i + 1) % n]));
+				iplusone = (i + 1) % n;
+				iminusone = (i + n - 1) % n;
+				hedges[i]->next = hedges[iplusone];
+				hedges[i]->prev = hedges[iminusone];
+				it = twin_map.find(make_pair(faceids[i], faceids[iplusone]));
 				if (it != twin_map.end())
 				{
 					hedges[i]->twin = it->second;
@@ -106,7 +138,7 @@ bool myMesh::readFile(std::string filename)
 					twin_map.erase(it);
 				}
 				else
-					twin_map[make_pair(faceids[(i + 1) % n], faceids[i])] = hedges[i];
+					twin_map[make_pair(faceids[iplusone], faceids[i])] = hedges[i];
 			}
 			myFace *f = new myFace();
 			f->adjacent_halfedge = hedges[0];
@@ -114,7 +146,7 @@ bool myMesh::readFile(std::string filename)
 			faces.push_back(f);
 		}
 	}
-
+	}
 	checkMesh();
 	normalize();
 
@@ -267,7 +299,6 @@ void myMesh::splitFaceTRIS(myFace *f, myPoint3D *p)
 
 void myMesh::splitEdge(myHalfedge *e1, myPoint3D *p)
 {
-
 	/**** TODO ****/
 }
 
@@ -275,7 +306,6 @@ void myMesh::splitFaceQUADS(myFace *f, myPoint3D *p)
 {
 	/**** TODO ****/
 }
-
 
 void myMesh::subdivisionCatmullClark()
 {
@@ -351,39 +381,6 @@ void myMesh::triangulate()
 	}
 }
 
-// void myMesh::triangulate()
-// {
-// 	// Keep triangulating until all faces are triangles
-// 	// We use a while loop because splitFaceTRIS modifies the faces vector
-// 	bool has_non_triangles = true;
-// 	while (has_non_triangles) {
-// 		has_non_triangles = false;
-		
-// 		// Create a fresh copy of the current faces vector
-// 		std::vector<myFace *> faces_to_triangulate;
-// 		for (unsigned int i = 0; i < faces.size(); i++) {
-// 			faces_to_triangulate.push_back(faces[i]);
-// 		}
-		
-// 		// Triangulate each non-triangle face
-// 		for (unsigned int i = 0; i < faces_to_triangulate.size(); i++) {
-// 			// Check if face pointer is still valid (wasn't deleted in a previous iteration)
-// 			bool face_exists = false;
-// 			for (unsigned int j = 0; j < faces.size(); j++) {
-// 				if (faces[j] == faces_to_triangulate[i]) {
-// 					face_exists = true;
-// 					break;
-// 				}
-// 			}
-			
-// 			if (face_exists) {
-// 				if (triangulate(faces_to_triangulate[i])) {
-// 					has_non_triangles = true;
-// 				}
-// 			}
-// 		}
-// 	}
-// }
 
 //return false if already triangle, true othewise.
 int myMesh::countFaceVertices(myFace *f)
@@ -728,3 +725,139 @@ bool myMesh::triangulate(myFace *f)
 	return true;
 }
 
+void myMesh::testMeshIsCorrect(){
+	checkMesh();
+	testclosecircuit();
+} 
+void myMesh::testclosecircuit(){
+	for (unsigned int i = 0; i < halfedges.size(); i++) {
+		myHalfedge *h = halfedges[i];
+		if (h->next == NULL || h->prev == NULL || h->source == NULL || h->adjacent_face == NULL) {
+			cout << "Error: Halfedge " << i << " has null pointer(s)!" << endl;
+			break;
+		}
+		if (h->next->prev != h) {
+			cout << "Error: Halfedge " << i << "'s next's prev does not point back to it!" << endl;
+			break;
+		}
+		if (h->prev->next != h) {
+			cout << "Error: Halfedge " << i << "'s prev's next does not point back to it!" << endl;
+			break;
+		}
+	}
+}
+void myMesh::drawSurfaceOfRevolution(myPoint3D *profile, int num_profile_points, int num_segments)
+{
+	// Clear the temporary vertices added by readFile while reading the profile
+	clear();
+
+	const double PI = acos(-1.0);
+	const int n = num_profile_points; // profile points (latitude)
+	const int s = num_segments;       // rotation steps  (longitude)
+
+	// ----- Create vertices -----
+	// Vertex at grid position (j, i): profile[i] rotated by angle j * 2*PI/s around the Y-axis.
+	// Stored at index j*n + i.
+	for (int j = 0; j < s; j++) {
+		double theta = 2.0 * PI * j / s;
+		double cosT  = cos(theta);
+		double sinT  = sin(theta);
+		for (int i = 0; i < n; i++) {
+			myVertex *v  = new myVertex();
+			v->point     = new myPoint3D(profile[i].X * cosT,
+			                             profile[i].Y,
+			                             profile[i].X * sinT);
+			vertices.push_back(v);
+		}
+	}
+
+	// ----- Create quad faces and halfedges -----
+	// Face (j, i) has corners: v[j][i], v[j][i+1], v[j+1][i+1], v[j+1][i]
+	// (all indices wrap around modulo s and n → closed torus topology)
+	//
+	// Four halfedges per quad:
+	//   h0: v[j][i]     → v[j][ip1]     (along profile)
+	//   h1: v[j][ip1]   → v[jp1][ip1]   (around revolution)
+	//   h2: v[jp1][ip1] → v[jp1][i]     (along profile, reversed)
+	//   h3: v[jp1][i]   → v[j][i]       (around revolution, reversed)
+
+	// Store halfedges indexed by face then local index (0-3)
+	std::vector<std::array<myHalfedge*, 4>> fhe(s * n);
+
+	for (int j = 0; j < s; j++) {
+		for (int i = 0; i < n; i++) {
+			const int fi  = j * n + i;
+			const int jp1 = (j + 1) % s;
+			const int ip1 = (i + 1) % n;
+
+			// Allocate halfedges
+			for (int k = 0; k < 4; k++) {
+				fhe[fi][k] = new myHalfedge();
+				halfedges.push_back(fhe[fi][k]);
+			}
+
+			myHalfedge *h0 = fhe[fi][0];
+			myHalfedge *h1 = fhe[fi][1];
+			myHalfedge *h2 = fhe[fi][2];
+			myHalfedge *h3 = fhe[fi][3];
+
+			// Sources
+			h0->source = vertices[j   * n + i  ];
+			h1->source = vertices[j   * n + ip1];
+			h2->source = vertices[jp1 * n + ip1];
+			h3->source = vertices[jp1 * n + i  ];
+
+			// Cycle: next / prev
+			h0->next = h1; h1->next = h2; h2->next = h3; h3->next = h0;
+			h0->prev = h3; h1->prev = h0; h2->prev = h1; h3->prev = h2;
+
+			// Face
+			myFace *f = new myFace();
+			f->adjacent_halfedge = h0;
+			h0->adjacent_face = h1->adjacent_face = h2->adjacent_face = h3->adjacent_face = f;
+			faces.push_back(f);
+
+			// Each vertex keeps an arbitrary outgoing halfedge
+			vertices[j   * n + i  ]->originof = h0;
+			vertices[j   * n + ip1]->originof = h1;
+			vertices[jp1 * n + ip1]->originof = h2;
+			vertices[jp1 * n + i  ]->originof = h3;
+		}
+	}
+
+	// ----- Set up twin halfedges -----
+	// twin(h0(j,i)) = h2(j-1, i)
+	// twin(h1(j,i)) = h3(j,  i+1)
+	// twin(h2(j,i)) = h0(j+1, i)
+	// twin(h3(j,i)) = h1(j,  i-1)
+	for (int j = 0; j < s; j++) {
+		for (int i = 0; i < n; i++) {
+			const int fi  = j * n + i;
+			const int jm1 = (j - 1 + s) % s;
+			const int jp1 = (j + 1) % s;
+			const int im1 = (i - 1 + n) % n;
+			const int ip1 = (i + 1) % n;
+
+			fhe[fi][0]->twin = fhe[jm1 * n + i  ][2];
+			fhe[fi][1]->twin = fhe[j   * n + ip1][3];
+			fhe[fi][2]->twin = fhe[jp1 * n + i  ][0];
+			fhe[fi][3]->twin = fhe[j   * n + im1][1];
+		}
+	}
+}
+
+bool myMesh::isProfileFile(std::string filename) {
+	std::ifstream fin(filename);
+	if (!fin.is_open()) {
+		cout << "Unable to open file!\n";
+		return false;
+	}
+	std::string line;
+	while (std::getline(fin, line)) {
+		std::istringstream iss(line);
+		std::string token;
+		if (!(iss >> token)) continue; // Skip empty lines
+		return token == "num_profile_points"; // First non-empty line decides
+	}
+	return false;
+}

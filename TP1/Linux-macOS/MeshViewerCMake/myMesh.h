@@ -39,6 +39,10 @@ public:
 	void simplify(myVertex *);
 
 	void clear();
+	void testMeshIsCorrect();
+	void testclosecircuit();
+	bool isProfileFile(std::string filename);
+	void drawSurfaceOfRevolution(myPoint3D *profile, int num_profile_points, int num_segments);
 
 	myMesh(void);
 	~myMesh(void);
