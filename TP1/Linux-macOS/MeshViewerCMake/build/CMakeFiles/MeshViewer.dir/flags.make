@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/kokoudevops/Documents/ESIEE2025_2026/3DModeling/3dmodeling/TP1/Linux-macOS/MeshViewerCMake -isystem /usr/lib
 
-CXX_FLAGS = 
+CXX_FLAGS = -g
 

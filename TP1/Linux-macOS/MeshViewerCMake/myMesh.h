@@ -36,7 +36,6 @@ public:
 	void removeOldFace(myFace *f, std::vector<myHalfedge *> &original_halfedges);
 
 	void simplify();
-	void simplify(myVertex *);
 
 	void clear();
 	void testMeshIsCorrect();

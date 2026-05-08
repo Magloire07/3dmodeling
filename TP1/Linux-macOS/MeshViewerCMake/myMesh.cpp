@@ -88,7 +88,6 @@ bool myMesh::readFile(std::string filename)
 						// cout << "v " << x << " " << y << " " << z << endl;
 					}
 				}
-				
 				drawSurfaceOfRevolution(profile, num_profile_points, num_segments);
 
 	}else{
@@ -311,16 +310,122 @@ void myMesh::subdivisionCatmullClark()
 {
 	/**** TODO ****/
 }
-
+double lengthHalfEdge(myVertex *v1, myVertex *v2)
+{
+	double dx = v2->point->X - v1->point->X;
+	double dy = v2->point->Y - v1->point->Y;
+	double dz = v2->point->Z - v1->point->Z;
+	return sqrt(dx*dx + dy*dy + dz*dz);
+}
+myVertex  barycenter(myVertex *v1, myVertex *v2)
+{
+	myVertex result;
+	result.point = new myPoint3D((v1->point->X + v2->point->X) / 2,
+		(v1->point->Y + v2->point->Y) / 2,
+		(v1->point->Z + v2->point->Z) / 2);
+	return result;
+}
 void myMesh::simplify()
 {
-	/**** TODO ****/
+	cout << "[DBG simplify] start, faces=" << faces.size() << " verts=" << vertices.size() << " he=" << halfedges.size() << endl; cout.flush();
+	// Find the shortest edge in the mesh whose both adjacent faces are triangles
+	myHalfedge *h = NULL;
+	double min_length = 1e10;
+	for (unsigned int i = 0; i < halfedges.size(); i++) {
+		myHalfedge *he = halfedges[i];
+		if (he->twin == NULL) continue;
+		// Both faces must be triangles (3-cycle: prev->next == he)
+		if (he->prev->next != he) continue;
+		if (he->twin->prev->next != he->twin) continue;
+		// All boundary twins must exist (no boundary edges on the two triangles)
+		if (!he->next->twin || !he->prev->twin) continue;
+		if (!he->twin->next->twin || !he->twin->prev->twin) continue;
+		double length = lengthHalfEdge(he->source, he->twin->source);
+		if (length < min_length) {
+			min_length = length;
+			h = he;
+		}
+	}
+	if (h == NULL) { cout << "[DBG simplify] no valid edge found" << endl; return; }
+	cout << "[DBG simplify] shortest edge found, length=" << min_length << endl; cout.flush();
+
+	myHalfedge *ht = h->twin;
+	myVertex   *v1 = h->source;
+	myVertex   *v2 = ht->source;
+
+	// Halfedges of the two faces adjacent to edge (v1->v2)
+	myHalfedge *h_n  = h->next;   // v2 -> v3
+	myHalfedge *h_p  = h->prev;   // v3 -> v1
+	myHalfedge *ht_n = ht->next;  // v1 -> v4
+	myHalfedge *ht_p = ht->prev;  // v4 -> v2
+
+	myFace *f1 = h->adjacent_face;
+	myFace *f2 = ht->adjacent_face;
+	if (f1 == f2) { cout << "[DBG simplify] f1==f2 degenerate" << endl; return; }
+	cout << "[DBG simplify] v1=" << v1 << " v2=" << v2 << " f1=" << f1 << " f2=" << f2 << endl; cout.flush();
+
+	// Move v1 to the barycenter of v1 and v2
+	myVertex bary = barycenter(v1, v2);
+	v1->point->X = bary.point->X;
+	v1->point->Y = bary.point->Y;
+	v1->point->Z = bary.point->Z;
+	delete bary.point;
+
+	// Bypass f1: the surviving boundary edges become twins of each other
+	cout << "[DBG simplify] bypass f1: h_n->twin=" << h_n->twin << " h_p->twin=" << h_p->twin << endl; cout.flush();
+	h_n->twin->twin = h_p->twin;
+	h_p->twin->twin = h_n->twin;
+
+	// Bypass f2: the surviving boundary edges become twins of each other
+	cout << "[DBG simplify] bypass f2: ht_n->twin=" << ht_n->twin << " ht_p->twin=" << ht_p->twin << endl; cout.flush();
+	ht_n->twin->twin = ht_p->twin;
+	ht_p->twin->twin = ht_n->twin;
+	cout << "[DBG simplify] bypass done" << endl; cout.flush();
+
+	// Fix originof pointers that point to halfedges about to be deleted
+	myVertex *v3 = h_p->source;
+	myVertex *v4 = ht_p->source;
+
+	if (v1->originof == h     || v1->originof == ht_n) v1->originof = h_p->twin;
+	if (v3->originof == h_p)                           v3->originof = h_n->twin;
+	if (v4->originof == ht_p)                          v4->originof = ht_n->twin;
+
+	// Redirect all halfedges sourced at v2 to v1
+	for (unsigned int i = 0; i < halfedges.size(); i++) {
+		if (halfedges[i]->source == v2)
+			halfedges[i]->source = v1;
+	}
+
+	// Remove v2 from the mesh
+	for (unsigned int i = 0; i < vertices.size(); i++) {
+		if (vertices[i] == v2) { vertices.erase(vertices.begin() + i); break; }
+	}
+	delete v2->point;
+	delete v2;
+	cout << "[DBG simplify] v2 deleted" << endl; cout.flush();
+
+	// Remove and delete the 6 halfedges belonging to f1 and f2
+	myHalfedge *to_delete[6] = { h, h_n, h_p, ht, ht_n, ht_p };
+	for (int k = 0; k < 6; k++) {
+		for (unsigned int i = 0; i < halfedges.size(); i++) {
+			if (halfedges[i] == to_delete[k]) { halfedges.erase(halfedges.begin() + i); break; }
+		}
+		delete to_delete[k];
+	}
+
+	// Remove and delete f1 and f2
+	for (unsigned int i = 0; i < faces.size(); i++) {
+		if (faces[i] == f1) { faces.erase(faces.begin() + i); break; }
+	}
+	delete f1;
+	for (unsigned int i = 0; i < faces.size(); i++) {
+		if (faces[i] == f2) { faces.erase(faces.begin() + i); break; }
+	}
+	delete f2;
+	cout << "[DBG simplify] done, faces=" << faces.size() << " verts=" << vertices.size() << " he=" << halfedges.size() << endl; cout.flush();
 }
 
-void myMesh::simplify(myVertex *)
-{
-	/**** TODO ****/
-}
+
 
 bool pointInTriangle(myVertex *A, myVertex *B, myVertex *C, myVertex *P)
 {
@@ -759,14 +864,12 @@ void myMesh::drawSurfaceOfRevolution(myPoint3D *profile, int num_profile_points,
 	// Vertex at grid position (j, i): profile[i] rotated by angle j * 2*PI/s around the Y-axis.
 	// Stored at index j*n + i.
 	for (int j = 0; j < s; j++) {
-		double theta = 2.0 * PI * j / s;
+		double theta = 2.0 * PI * j / s; //angle for current segment
 		double cosT  = cos(theta);
 		double sinT  = sin(theta);
 		for (int i = 0; i < n; i++) {
 			myVertex *v  = new myVertex();
-			v->point     = new myPoint3D(profile[i].X * cosT,
-			                             profile[i].Y,
-			                             profile[i].X * sinT);
+			v->point     = new myPoint3D(profile[i].X * cosT, profile[i].Y, profile[i].X * sinT);
 			vertices.push_back(v);
 		}
 	}
